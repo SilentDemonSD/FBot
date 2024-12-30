@@ -20,6 +20,7 @@ class TechVJXBot(Client):
             workers=50,
             plugins={"root": "plugins"},
             sleep_threshold=5,
+            in_memory=True
         )
 
     async def set_self(self):
