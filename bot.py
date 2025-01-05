@@ -34,12 +34,11 @@ from TechVJ.bot.clients import initialize_clients
 
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
-TechVJBot.start()
-
 
 async def start():
     print('\n')
     print('Initalizing Your Bot')
+    await TechVJBot.start()
     bot_info = await TechVJBot.get_me()
     await initialize_clients()
     for name in files:
