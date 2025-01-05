@@ -11,6 +11,7 @@ from gtts import gTTS
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from TechVJ.bot import TechVJBot
 
 def convert(text):
     audio = BytesIO()
@@ -29,8 +30,7 @@ async def text_to_speech(bot, message: Message):
         m = await vj.reply_text("Processing")
         text = vj.text
         try:
-            loop = get_running_loop()
-            audio = await loop.run_in_executor(None, convert, text)
+            audio = await TechVJBot.loop.run_in_executor(None, convert, text)
             await vj.reply_audio(audio)
             await m.delete()
             audio.close()

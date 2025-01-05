@@ -6,6 +6,7 @@
 
 import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
+from asyncio import run as asyrun
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
@@ -34,7 +35,6 @@ from TechVJ.bot.clients import initialize_clients
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
 TechVJBot.start()
-loop = asyncio.get_event_loop()
 
 
 async def start():
@@ -96,7 +96,7 @@ async def start():
 
 if __name__ == '__main__':
     try:
-        loop.run_until_complete(start())
+        asyrun(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
 
