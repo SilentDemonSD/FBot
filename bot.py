@@ -23,6 +23,9 @@ from datetime import date, datetime
 from aiohttp import web
 from plugins import web_server
 from plugins.clone import restart_bots
+from uvloop import install
+
+install()
 
 from TechVJ.bot import TechVJBot
 from TechVJ.util.keepalive import ping_server

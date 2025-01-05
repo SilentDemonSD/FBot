@@ -31,7 +31,7 @@ async def save_file(media):
     """Save file in database"""
 
     file_id, file_ref = unpack_new_file_id(media.file_id)
-    file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name)) 
+    file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.caption or media.file_name)) 
     unwanted_chars = ['[', ']', '(', ')']
     for char in unwanted_chars:
         file_name = file_name.replace(char, '')
