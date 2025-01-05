@@ -6,7 +6,7 @@
 
 import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
-from asyncio import run as asyrun
+from asyncio import get_event_loop
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
@@ -22,8 +22,6 @@ from typing import Union, Optional, AsyncGenerator
 from Script import script 
 from datetime import date, datetime 
 from aiohttp import web
-from plugins import web_server
-from plugins.clone import restart_bots
 from uvloop import install
 
 install()
@@ -31,15 +29,17 @@ install()
 from TechVJ.bot import TechVJBot
 from TechVJ.util.keepalive import ping_server
 from TechVJ.bot.clients import initialize_clients
+from plugins import web_server
+from plugins.clone import restart_bots
 
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
-TechVJBot.start()
 
 async def start():
     print('\n')
     print('Initalizing Your Bot')
-    bot_info = await TechVJBot.get_me()
+    await TechVJBot.start()
+    bot_info = TechVJBot.me
     await initialize_clients()
     for name in files:
         with open(name) as a:
@@ -57,7 +57,7 @@ async def start():
     b_users, b_chats = await db.get_banned()
     temp.BANNED_USERS = b_users
     temp.BANNED_CHATS = b_chats
-    me = await TechVJBot.get_me()
+    me = TechVJBot.me
     temp.BOT = TechVJBot
     temp.ME = me.id
     temp.U_NAME = me.username
@@ -95,6 +95,7 @@ async def start():
 
 if __name__ == '__main__':
     try:
-        TechVJBot.loop.run_until_complete(start())
+        loop = get_event_loop()
+        loop.run_until_complete(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
