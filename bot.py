@@ -7,6 +7,9 @@
 import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
 from asyncio import get_event_loop
+# from uvloop import install
+
+# install()
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
@@ -22,9 +25,6 @@ from typing import Union, Optional, AsyncGenerator
 from Script import script 
 from datetime import date, datetime 
 from aiohttp import web
-from uvloop import install
-
-install()
 
 from TechVJ.bot import TechVJBot
 from TechVJ.util.keepalive import ping_server
